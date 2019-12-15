@@ -1,0 +1,385 @@
+.main-nav li .glyphicon {
+    margin-right: 10px;
+}
+
+$card-enter-duration: 0.4s;
+$card-deal-delay: 0.15s;
+$card-flip-delay: 0.1s;
+$card-deal-bezier: cubic-bezier(0.16, 0.84, 0.32, 1.04);
+$card-rotate-hearts: rotate(-1deg);
+$card-rotate-clubs: rotate(1deg);
+$card-rotate-odd: rotate(-2deg);
+$card-rotate-even: rotate(2deg);
+
+$card-height: 200px;
+$card-width: 146px;
+$card-height-smaller: $card-height/1.4;
+$card-width-smaller: $card-width/1.4;
+$card-height-small: $card-height/1.8;
+$card-width-small: $card-width/1.8;
+
+/* Highlighting rules for nav menu items */
+.main-nav li a.active,
+.main-nav li a.active:hover,
+.main-nav li a.active:focus {
+    background-color: #4189C7;
+    color: white;
+}
+
+/* Keep the nav menu independent of scrolling and on top of other items */
+.main-nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1;
+}
+
+.fixshit {
+    height: unset !important;
+}
+
+.pop {
+    box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+}
+
+.pop:hover {
+    box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
+}
+
+.pop-light {
+    box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+    transition: all 0.3s cubic-bezier(.25,.8,.25,1);
+}
+
+.homecard-container{
+    perspective: 700;
+    height: 300px; 
+}
+
+.homecard {
+    position: relative;
+    /* width: 150px; */
+    /* height: 150px; */
+    width: 100%;
+    transition: all 0.6s ease-in;
+    transform-style: preserve-3d;    
+}
+
+.framsida, .baksida {
+    background: #444;
+    top:0;
+    left:0;
+    color: #4189C7;
+    position: absolute;
+    width: 100%;
+    height: 200px;
+    /* height: 150px; */
+    // backface-visibility: hidden;
+    border-radius: 10px;
+    
+}
+
+ .baksida {
+     transform: rotateY(180deg);
+}
+
+.homecard:hover {
+    transform: rotateY(180deg);
+   
+}
+
+.animate-test {
+    transform: rotateY(180deg);
+}
+
+.fade {
+    animation: infinite-spinning 2s;
+    transition: all 5s ease-in;
+}
+
+@keyframes infinite-spinning {
+     from{
+         transform: rotateY(0deg);
+        //  transition: all 0.9s ease-in;
+        //transform: translateX(0px);
+        transform: translate3d(100vw, -100vh, 0);
+        transition-delay: $card-flip-delay * 2;
+        //transition: transform $card-enter-duration $card-deal-bezier;
+     }
+     to{ 
+        transform: rotateY(180deg);
+        // transition: all 0.9s ease-in;
+        transform: translate3d(0, 0, 0);
+        //transition: transform $card-enter-duration $card-deal-bezier;
+     }
+
+}
+
+.square1 {
+    background: #00aa9d;
+    border-radius: 3px;
+    height: 150px;
+    margin: 100px;
+    position: absolute;
+    transition: transform 0.8s;
+    width: 150px;
+  }
+  
+  .square2 {
+    background: #2b3f53;
+    border-radius: 3px;
+    height: 150px;
+    margin: 100px;
+    transition: transform 0.2s;
+    position: absolute;
+    width: 150px;    
+    
+      &:hover {
+        // transform: translate(20px, 20px);
+        transform: translateX(200px);
+    }
+  }
+
+
+
+
+  .card {
+    color: #000;
+    //height: $card-height;
+    width: $card-width;
+
+    position: relative;
+    perspective: 600px;
+
+    // overlap cards
+    margin-left: $card-width / -2;
+
+    .front,
+    .back {
+        background-color: #fff;
+        border-radius: 10px;
+        box-shadow: 0 0 5px rgba(lighten(#000, 5%), 0.5);
+        position: absolute;
+        top:0;
+        left:0;
+        width:inherit;
+        height:inherit;
+        transform-style: preserve-3d;
+        backface-visibility: hidden;
+    }
+
+    .front {
+        display: flex;
+        flex-direction: column;
+        z-index: 3;
+        transform: rotateX(0) rotateY(0);
+        // hide suit (example S, C,...)
+        // presentation wll be replaced by
+        // symbols defined here
+        .suit {
+            font-size:0;
+        }
+        .section {
+            &.top,
+            &.bottom {
+                flex: 0 1 auto;
+                padding-top: 6px;
+                span {
+                    display: block;
+                    font-weight: bold;
+                    line-height: 24px;
+                    height:24px;
+                    &.rank {
+                        font-size: 24px;
+                    }
+                    &.suit {
+                        padding-left: 1px;
+                        &:after {
+                            font-size: 24px;
+                        }
+                    }
+                }
+            }
+
+            &.center {
+                flex: 1 1 auto;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                text-align: center;
+                &:after {
+                    font-size: 80px;
+                }
+            }
+
+            &.bottom {
+                transform: rotate(180deg);
+            }
+
+            // align properly rank and suit
+            // at the top and the bottom
+            .container {
+                max-width: 25%;
+                text-align: center;
+            }
+        }
+    }
+
+    .back {
+        z-index: 2;
+        transform: rotateY(-179deg);
+
+        border: 10px solid #fff;
+        // pattern from http://lea.verou.me/css3patterns/#argyle
+        background-color: #6d695c;
+        background-image:
+        repeating-linear-gradient(120deg, rgba(255,255,255,.1), rgba(255,255,255,.1) 1px, transparent 1px, transparent 60px),
+        repeating-linear-gradient(60deg, rgba(255,255,255,.1), rgba(255,255,255,.1) 1px, transparent 1px, transparent 60px),
+        linear-gradient(60deg, rgba(0,0,0,.1) 25%, transparent 25%, transparent 75%, rgba(0,0,0,.1) 75%, rgba(0,0,0,.1)),
+        linear-gradient(120deg, rgba(0,0,0,.1) 25%, transparent 25%, transparent 75%, rgba(0,0,0,.1) 75%, rgba(0,0,0,.1));
+        background-size: 70px 120px;
+    }
+
+    // color for hearts and diamonds
+    &.H,
+    &.D {
+        color: #e40909;
+    }
+    // symbols for each suit
+    &.H .suit:after {
+        content: '\2665';
+    }
+    &.S .suit:after {
+        content: '\2660';
+    }
+    &.C .suit:after {
+        content: '\2663';
+    }
+    &.D .suit:after {
+        content: '\2666';
+    }
+    // guarantees some randomness
+    // in card rotation
+    &.H {
+        transform: $card-rotate-hearts;
+    }
+    &.C {
+        transform: $card-rotate-clubs;
+    }
+    &:nth-child(odd) {
+        transform: $card-rotate-odd;
+    }
+    &:nth-child(even) {
+        transform: $card-rotate-even;
+    }
+
+    // facedown card
+    &[data-private="true"] {
+        .front {
+            transform: rotateY(179deg);
+        }
+        .back {
+            transform: rotateX(0) rotateY(0);
+        }
+    }
+}
+
+.card {
+    &.list-enter {
+        transform: translate3d(100vw, -100vh, 0);
+        transition: transform $card-enter-duration $card-deal-bezier;
+        transition-delay: 0;
+        &[data-private="false"] {
+            .front,
+            .back {
+                transition: transform $card-enter-duration $card-deal-bezier;
+                transition-delay: $card-flip-delay * 0.8;
+            }
+            .front {
+                transform: rotateY(179deg);
+            }
+            .back {
+                transform: rotateX(0) rotateY(0);
+            }
+        }
+        &.list-enter-active {
+            $baseTransform: translate3d(0, 0, 0);
+            &.H {
+                transform: #{$baseTransform} $card-rotate-hearts;
+            }
+            &.C {
+                transform: #{$baseTransform} $card-rotate-clubs;
+            }
+            &:nth-child(odd) {
+                transform: #{$baseTransform} $card-rotate-odd;
+            }
+            &:nth-child(even) {
+                transform: #{$baseTransform} $card-rotate-even;
+            }
+            &[data-private="false"] {
+                .front {
+                    transform: rotateX(0) rotateY(0);
+                }
+                .back {
+                    transform: rotateY(-179deg);
+                }
+            }
+        }
+    }
+
+    &.list-leave {
+        transform: translate3d(0, 0, 0);
+        transition: transform $card-enter-duration $card-deal-bezier;
+
+        &.list-leave-active {
+            transform: translate3d(0, -100vh, 0);
+        }
+    }
+}
+
+@media (max-width: 767px) {
+    /* On small screens, the nav menu spans the full width of the screen. Leave a space for it. */
+    body {
+        padding-top: 50px;
+    }
+}
+
+@media (min-width: 768px) {
+    /* On small screens, convert the nav menu to a vertical sidebar */
+    .main-nav {
+        height: 100%;
+        width: calc(25% - 20px);
+    }
+    .main-nav .navbar {
+        border-radius: 0px;
+        border-width: 0px;
+        height: 100%;
+    }
+    .main-nav .navbar-header {
+        float: none;
+    }
+    .main-nav .navbar-collapse {
+        border-top: 1px solid #444;
+        padding: 0px;
+    }
+    .main-nav .navbar ul {
+        float: none;
+    }
+    .main-nav .navbar li {
+        float: none;
+        font-size: 15px;
+        margin: 6px;
+    }
+    .main-nav .navbar li a {
+        padding: 10px 16px;
+        border-radius: 4px;
+    }
+    .main-nav .navbar a {
+        /* If a menu item's text is too long, truncate it */
+        width: 100%;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+}
